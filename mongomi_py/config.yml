@@ -1,0 +1,4 @@
+userinfo:
+  username: zabbix
+  password: "123456"
+  #must be string
