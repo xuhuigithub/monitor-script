@@ -13,7 +13,7 @@ if __name__ == "__main__":
     yml_data = yconfig_read('./config.yml')
     username = yml_data['userinfo']['username']
     password = yml_data['userinfo']['password']
-    result,data = mongocheck('192.168.100.141',mongoport,username,password,admincommand='serverStatus')
+    result,data = mongocheck('192.168.100.142',mongoport,username,password,admincommand='serverStatus')
     if result:
       curconn = data['connections']['current']
       avaconn = data['connections']['available']

@@ -18,7 +18,7 @@ if __name__ == "__main__":
     if result:
       p = Process(data['pid'])
       rss_mem = p.memory_info().rss
-      print (int(rss_mem)/1024)/1024
+      print rss_mem
     else:
       print "connection return False"
       sys.exit(1)

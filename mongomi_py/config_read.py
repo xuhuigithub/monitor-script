@@ -6,7 +6,6 @@ def yconfig_read(configfile):
     yml_data = yaml.load(f)
     return yml_data
 
-
 if __name__ == "__main__":
   yml_data = yconfig_read('./config.yml')
   username = yml_data['userinfo']['username']

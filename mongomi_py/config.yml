@@ -2,3 +2,7 @@ userinfo:
   username: zabbix
   password: "123456"
   #must be string
+dbinfo:
+  database:
+    name: "test"
+    collection: "test"

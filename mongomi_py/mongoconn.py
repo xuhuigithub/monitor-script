@@ -16,11 +16,11 @@ def mongocheck(host,port,user,password,admincommand='isMaster'):
   try:
     data = client.admin.command(admincommand)
   except ServerSelectionTimeoutError:
-    return False,'server not availabe'
+    client = False
+    return client,'server not availabe'
   else:
-    return True,data
+    return client,data
     client.close()
-
 if __name__ == "__main__":
   try:
     port = argv[1]
