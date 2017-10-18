@@ -1,0 +1,18 @@
+etcd164:
+  host: "etcd164"
+  ip: "192.168.206.164"
+  port: "10050"
+  groups:
+    - groupid: "45"
+etcd165:
+  host: "etcd165"
+  ip: "192.168.206.165"
+  port: "10050"
+  groups:
+    - groupid: "45"
+etcd166:
+  host: "etcd166"
+  ip: "192.168.206.166"
+  port: "10050"
+  groups:
+    - groupid: "45"
