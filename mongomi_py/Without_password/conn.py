@@ -20,4 +20,5 @@ else:
     print "mongo exec command fail"
   else:
     print data['mem']['resident']
-    conn.close()
+    if conn:
+      conn.close()
