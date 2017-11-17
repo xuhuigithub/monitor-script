@@ -2,12 +2,13 @@
 #encoding: utf-8
 import requests
 import json
+import re
 class Zabbix(object):
   def __init__(self,uri,username,password):
     self.__username = username
     self.__passwrod = password
     self.uri = uri
-    headers = {'content-type': 'application/json'}
+    self.headers = {'content-type': 'application/json'}
     data = {
       "jsonrpc": "2.0",
       "id": 1,
@@ -18,28 +19,48 @@ class Zabbix(object):
       },
       "auth": None,
     }
-    res = requests.post('http://%s/api_jsonrpc.php'%self.uri, data=json.dumps(data), headers=headers)
+    res = requests.post('http://%s/api_jsonrpc.php'%self.uri, data=json.dumps(data), headers=self.headers)
     self.token = res.json().get('result')
 
+  @property
   def getgroups(self):
-    headers = {'content-type': 'application/json'}
     data = {
       "jsonrpc": "2.0",
       "method": "hostgroup.get",
       "params": {
-        "output": "extend",
+        "output": ['groupid','name'],
       },
       "auth": self.token,
       "id": 1
     }
-    res = requests.post('http://%s/api_jsonrpc.php' % self.uri, data=json.dumps(data), headers=headers)
+    res = requests.post('http://%s/api_jsonrpc.php' % self.uri, data=json.dumps(data), headers=self.headers)
     return res.json().get('result')
+
+  @property
+  def gettemplates(self):
+    data = {
+      "jsonrpc": "2.0",
+      "method": "template.get",
+      "params": {
+        "output": ['templateid','name'],
+      },
+      "auth": self.token,
+      "id": 1
+    }
+    res = requests.post('http://%s/api_jsonrpc.php' % self.uri, data=json.dumps(data), headers=self.headers)
+    return res.json().get('result')
+
+  def commongateway(self,data):
+    data = data
+    data['auth'] = self.token
+    data['id'] = 1
+    res = requests.post('http://%s/api_jsonrpc.php' % self.uri, data=json.dumps(data), headers=self.headers)
+    print res.json()
+    return res.json().get('result')
+
   def createhosts(self,hosts):
     result = []
-    headers = {'content-type': 'application/json'}
     for host in hosts.keys():
-      print host
-      print hosts[host]
       data = {
         "jsonrpc": "2.0",
         "method": "host.create",
@@ -55,21 +76,26 @@ class Zabbix(object):
                     "port": hosts[host].get('port')
                 }
             ],
-            "groups": hosts[host].get('groups')
+            "groups": hosts[host].get('groups'),
+            "templates": hosts[host].get('templates')
         },
         "auth": self.token,
         "id": 1
         }
-      res = requests.post('http://%s/api_jsonrpc.php' % self.uri, data=json.dumps(data), headers=headers)
+      res = requests.post('http://%s/api_jsonrpc.php' % self.uri, data=json.dumps(data), headers=self.headers)
       result.append(res.json())
     return result
 
 if __name__ == "__main__":
   Server = Zabbix(uri='192.168.203.91',username='admin',password='zabbix_king')
-  groupids = Server.getgroups()
+  groupids = Server.getgroups
+  templateids = Server.gettemplates
   try:
     for i in groupids:
-      result = "groupname: %s" %(i['name']),"groupid: %s"%(i['groupid'])
-      print result
+      if re.search('4.0',str(i)):
+        print i
+    for z in templateids:
+      if re.search('Partition check',str(z)):
+        print z
   except KeyError:
     print '返回的结果不对！',groupids
