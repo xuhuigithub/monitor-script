@@ -11,3 +11,5 @@ if __name__ == "__main__":
   username = yml_data['userinfo']['username']
   password = yml_data['userinfo']['password']
   print username, password
+  tmp = list()
+  tmp.split(',')

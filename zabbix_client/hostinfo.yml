@@ -1,18 +1,42 @@
-etcd164:
-  host: "etcd164"
-  ip: "192.168.206.164"
+dns1:
+  host: "dns1"
+  ip: "192.168.206.94"
   port: "10050"
   groups:
     - groupid: "45"
-etcd165:
-  host: "etcd165"
-  ip: "192.168.206.165"
+  templates:
+    - templateid: "10218"
+    - templateid: "10217"
+    - templateid: "10177"
+dns2:
+  host: "dns2"
+  ip: "192.168.206.95"
   port: "10050"
   groups:
     - groupid: "45"
-etcd166:
-  host: "etcd166"
-  ip: "192.168.206.166"
+  templates:
+    - templateid: "10218"
+    - templateid: "10217"
+    - templateid: "10177"
+
+partol-nginx1:
+  host: "partol-nginx1"
+  ip: "192.168.206.98"
   port: "10050"
   groups:
     - groupid: "45"
+  templates:
+    - templateid: "10218"
+    - templateid: "10217"
+    - templateid: "10177"
+
+partol-nginx2:
+  host: "partol-nginx2"
+  ip: "192.168.206.99"
+  port: "10050"
+  groups:
+    - groupid: "45"
+  templates:
+    - templateid: "10218"
+    - templateid: "10217"
+    - templateid: "10177"
